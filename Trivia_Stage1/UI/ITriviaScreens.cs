@@ -10,7 +10,7 @@ namespace Trivia_Stage1.UI
     {
         bool ShowLogin();
         bool ShowSignup();
-
+        void ShowAddQuestion();
         void ShowPendingQuestions();
         void ShowGame();
         void ShowProfile();

@@ -27,6 +27,12 @@ namespace Trivia_Stage1.UI
             return true;
         }
 
+        public void ShowAddQuestion()
+        {
+            Console.WriteLine("Not implemented yet! Press any key to continue...");
+            Console.ReadKey(true);
+        }
+
         public void ShowPendingQuestions()
         {
             Console.WriteLine("Not implemented yet! Press any key to continue...");

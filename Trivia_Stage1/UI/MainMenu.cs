@@ -10,8 +10,9 @@ namespace Trivia_Stage1.UI
         public MainMenu() : base($"Main Menu")
         {
             //Build items in main menu!
-            AddItem("Check Pending Questions", new CheckPendingQuestions());
             AddItem("Start Game", new GameScreen());
+            AddItem("Add Question", new AddQuestionScreen());
+            AddItem("Check Pending Questions", new CheckPendingQuestions());
             AddItem("Profile", new ProfileScreen());
         }
 
