@@ -7,6 +7,7 @@ namespace Trivia_Stage1.UI
 {
     class AddQuestionScreen:Screen
     {
+    //message
         public AddQuestionScreen():base("Add Question")
         {
 
