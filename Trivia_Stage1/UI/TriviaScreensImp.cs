@@ -40,7 +40,9 @@ namespace Trivia_Stage1.UI
                 string email = Console.ReadLine();
                 while (!IsEmailValid(email))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("Bad Email Format! Please try again:");
+                    Console.ResetColor();
                     email = Console.ReadLine();
                 }
 
@@ -76,7 +78,9 @@ namespace Trivia_Stage1.UI
                 }
                 catch (Exception ex)
                 {
+                Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Failed to signup! Email may already exist in DB!");
+                Console.ResetColor();
                 }
                 
                 */
