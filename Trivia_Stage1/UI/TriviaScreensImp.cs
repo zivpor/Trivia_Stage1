@@ -112,8 +112,10 @@ namespace Trivia_Stage1.UI
         private void ClearScreenAndSetTitle(string title)
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{title,65}");
             Console.WriteLine();
+            Console.ResetColor();   
         }
 
         private bool IsEmailValid(string emailAddress)

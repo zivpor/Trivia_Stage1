@@ -16,7 +16,9 @@ namespace Trivia_Stage1.UI
         public virtual void Show()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{Title,65}");
+            Console.ResetColor();
         }
     }
 }
