@@ -16,7 +16,7 @@ namespace Trivia_Stage1.UI
         public virtual void Show()
         {
             Console.Clear();
-            Console.WriteLine($"\t\t\t\t\t{Title}");
+            Console.WriteLine($"{Title,65}");
         }
     }
 }
