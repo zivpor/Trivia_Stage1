@@ -16,7 +16,7 @@ namespace Trivia_Stage1.UI
             //Clear screen and set title (implemented by Screen Show)
             base.Show();
 
-            if (Program.ui.Screens.ShowSignup())
+            if (Program.ui.Screens.ShowSignUp())
             {
                 //Show main menu once user is logged in
                 MainMenu menu = new MainMenu();

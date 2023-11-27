@@ -9,7 +9,7 @@ namespace Trivia_Stage1.UI
     public interface ITriviaScreens
     {
         bool ShowLogin();
-        bool ShowSignup();
+        bool ShowSignUp();
         void ShowAddQuestion();
         void ShowPendingQuestions();
         void ShowGame();

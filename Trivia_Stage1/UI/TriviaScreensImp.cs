@@ -21,7 +21,7 @@ namespace Trivia_Stage1.UI
             Console.ReadKey(true);
             return true;
         }
-        public bool ShowSignup()
+        public bool ShowSignUp()
         {
             //Logout user if anyone is logged in!
             //A reference to the logged in user should be stored as a member variable
