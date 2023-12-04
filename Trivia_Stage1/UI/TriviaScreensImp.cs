@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Trivia_Stage1.Models;
 
 namespace Trivia_Stage1.UI
 {
@@ -12,7 +15,7 @@ namespace Trivia_Stage1.UI
 
         //Place here any state you would like to keep during the app life time
         //For example, player login details...
-
+         private DbContext Db = new TriviaContext();
 
         //Implememnt interface here
         public bool ShowLogin()
