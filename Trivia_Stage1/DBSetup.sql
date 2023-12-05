@@ -72,7 +72,7 @@ insert into SubjectQuestions ([SubjectName]) values('Fashion' );
 select * FROM SubjectQuestions;
 go
 
-insert into Player ([Email], [Name], [Rank], [Points]) values('noa.fisher.20072gmail.com', 'Noa', 3, 0);
+insert into Player ([Email], [Name], [Rank],[Password], [Points]) values('noa.fisher.20072gmail.com', 'Noa', 3,'1234', 0);
 select * FROM Player;
 go
 
