@@ -15,17 +15,29 @@ namespace Trivia_Stage1.UI
 
         //Place here any state you would like to keep during the app life time
         //For example, player login details...
-         private DbContext Db = new TriviaContext();
+         private TriviaContext Db = new TriviaContext();
 
         //Implememnt interface here
         public bool ShowLogin()
         {
-            Console.WriteLine("Not implemented yet! Press any key to continue...");
-            Console.ReadKey(true);
-            return true;
+            Console.WriteLine("Please enter your name");
+            string UserName = Console.ReadLine();
+            Console.WriteLine("Please enter your email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Please enter a password");
+            string password = Console.ReadLine();
+
+            Player p = Db.Login(UserName, email, password);
+            if (p != null)
+            {
+                return true;
+            }
+          
+            return false;
         }
         public bool ShowSignUp()
         {
+
             //Logout user if anyone is logged in!
             //A reference to the logged in user should be stored as a member variable
             //in this class! Example:

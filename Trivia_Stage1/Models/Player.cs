@@ -20,6 +20,9 @@ public partial class Player
 
     public int Points { get; set; }
 
+    [StringLength(8)]
+    public string Password { get; set; } = null!;
+
     [InverseProperty("CreatedByNavigation")]
     public virtual ICollection<Question> Questions { get; set; } = new List<Question>();
 

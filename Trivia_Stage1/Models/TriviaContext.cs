@@ -27,13 +27,13 @@ public partial class TriviaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server = localhost\\SQLEXPRESS; Database=TriviaDB;Trusted_Connection=true; TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server = localhost\\SQLEXPRESS; Database=TriviaDB; Trusted_Connection=true; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Player>(entity =>
         {
-            entity.HasKey(e => e.Email).HasName("PK__Player__A9D105350C094AEB");
+            entity.HasKey(e => e.Email).HasName("PK__Player__A9D10535902923E8");
 
             entity.HasOne(d => d.RankNavigation).WithMany(p => p.Players)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -42,38 +42,38 @@ public partial class TriviaContext : DbContext
 
         modelBuilder.Entity<Question>(entity =>
         {
-            entity.HasKey(e => e.QuestionId).HasName("PK__Question__0DC06FACB18A0767");
+            entity.HasKey(e => e.QuestionId).HasName("PK__Question__0DC06FAC21B566FC");
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Questions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Questions__Creat__33D4B598");
+                .HasConstraintName("FK__Questions__Creat__2D27B809");
 
             entity.HasOne(d => d.Status).WithMany(p => p.Questions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Questions__Statu__34C8D9D1");
+                .HasConstraintName("FK__Questions__Statu__2E1BDC42");
 
             entity.HasOne(d => d.SubjectNavigation).WithMany(p => p.Questions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Questions__Subje__35BCFE0A");
+                .HasConstraintName("FK__Questions__Subje__2F10007B");
         });
 
         modelBuilder.Entity<Ranking>(entity =>
         {
-            entity.HasKey(e => e.RankId).HasName("PK__Ranking__B37AF87644A4D67E");
+            entity.HasKey(e => e.RankId).HasName("PK__Ranking__B37AF87619645B85");
 
             entity.Property(e => e.RankId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<StatusQuestion>(entity =>
         {
-            entity.HasKey(e => e.StatusId).HasName("PK__StatusQu__C8EE206309614C2B");
+            entity.HasKey(e => e.StatusId).HasName("PK__StatusQu__C8EE20631FD637C1");
 
             entity.Property(e => e.StatusId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<SubjectQuestion>(entity =>
         {
-            entity.HasKey(e => e.SubjectId).HasName("PK__SubjectQ__AC1BA3A8ED620A51");
+            entity.HasKey(e => e.SubjectId).HasName("PK__SubjectQ__AC1BA3A87C61425E");
         });
 
         OnModelCreatingPartial(modelBuilder);

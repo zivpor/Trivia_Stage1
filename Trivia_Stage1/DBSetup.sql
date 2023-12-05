@@ -20,7 +20,8 @@ create table Player
 [Email] nvarchar(50) not null primary key,
 [Name] nvarchar(10) not null,
 [Rank] int not null foreign key references Ranking(RankId),
-[Points] int not null
+[Points] int not null,
+[Password] nvarchar(8) not null
 );
 
 create table StatusQuestions
