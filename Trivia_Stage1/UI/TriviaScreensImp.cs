@@ -16,24 +16,35 @@ namespace Trivia_Stage1.UI
         //Place here any state you would like to keep during the app life time
         //For example, player login details...
          private TriviaContext Db = new TriviaContext();
-
+        Player p;
         //Implememnt interface here
         public bool ShowLogin()
         {
-            Console.WriteLine("Please enter your name");
-            string UserName = Console.ReadLine();
-            Console.WriteLine("Please enter your email");
-            string email = Console.ReadLine();
-            Console.WriteLine("Please enter a password");
-            string password = Console.ReadLine();
-
-            Player p = Db.Login(UserName, email, password);
-            if (p != null)
+            bool ok = false; 
+            while (!ok)
             {
-                return true;
+                Console.WriteLine("Please enter your name");
+                string UserName = Console.ReadLine();
+                Console.WriteLine("Please enter your email");
+                string email = Console.ReadLine();
+                Console.WriteLine("Please enter a password");
+                string password = Console.ReadLine();
+
+                try
+                {
+                    this.p = Db.Login(UserName, password, email);
+                    if (p != null)
+                    {
+                        return true;
+                       
+                    }
+                    else { Console.WriteLine("enter again");
+                    }
+                }
+                catch (Exception ex) { Console.WriteLine("there is a problem..."); }
+              
             }
-          
-            return false;
+            return ok;
         }
         public bool ShowSignUp()
         {
