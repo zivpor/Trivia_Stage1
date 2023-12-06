@@ -131,10 +131,9 @@ namespace Trivia_Stage1.UI
             Console.WriteLine("Not implemented yet! Press any key to continue...");
             Console.ReadKey(true);
         }
-        public void ShowGame()
+        public void ShowGame()//זיו
         {
-            Console.WriteLine("Not implemented yet! Press any key to continue...");
-            Console.ReadKey(true);
+
         }
         public void ShowProfile()
         {
