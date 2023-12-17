@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,37 +9,38 @@ namespace Trivia_Stage1.Models
 {
     public partial class TriviaContext
     {
+        const int PLAYER_MANAGER = 3;
+        const int PLAYER_MASTER = 2;
+        const int PLAYER_TIRON = 1;
         public Player Login(string username, string password, string email)
         {
-            return this.Players.Where(p=>p.Name == username && p.Email == email && p.Password == password).FirstOrDefault();
+            return this.Players.Where(p => p.Name == username && p.Email == email && p.Password == password).FirstOrDefault();
         }
-        public Question GetQuestion(int i)
+        public void QuestoinsAndAnswers(Question question)
         {
-            return this.Questions.Where(x => x.QuestionId == i).FirstOrDefault();
+            Console.WriteLine(question.Text);
+            Console.WriteLine(question.Wanswer1);
+            Console.WriteLine(question.Wanswer2);
+            Console.WriteLine(question.Wanswer3);
+            Console.WriteLine(question.Ranswer);
         }
-        public string GetRightAnswer(int i)
+        public Player AddSignUp(string email, string name, string password)
         {
-            return this.Questions.Where(x => x.QuestionId == i).FirstOrDefault().Ranswer;
+            var p1 = new Player
+            {
+                Name = name,
+                Email = email,
+                Password = password,
+                Points = 0,
+                Rank = PLAYER_TIRON,
+            };
+            //Entry(p1).State = EntityState.Added; //חדש
+            Players.Add(p1);
+            //Console.WriteLine(Database.CanConnect());
+            SaveChanges();
+
+            return p1;
         }
-        public string GetAnswer1(int i)
-        {
-            return this.Questions.Where(x => x.QuestionId == i).FirstOrDefault().Wanswer1;
-        }
-        public string GetAnswer2(int i)
-        {
-            return this.Questions.Where(x => x.QuestionId == i).FirstOrDefault().Wanswer2;
-        }
-        public string GetAnswer3(int i)
-        {
-            return this.Questions.Where(x => x.QuestionId == i).FirstOrDefault().Wanswer3;
-        }
-        public int? GetPoints(string i)
-        {
-            return this.Players.Where(x => x.Email == i).FirstOrDefault().Points;
-        }
-        public void SetPoints(int points,string i)
-        {
-            this.Players.Where(x => x.Email == i).FirstOrDefault().Points = points;
-        }
+
     }
 }
