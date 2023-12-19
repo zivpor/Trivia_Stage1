@@ -12,7 +12,7 @@ namespace Trivia_Stage1.Models
         const int PLAYER_MANAGER = 3;
         const int PLAYER_MASTER = 2;
         const int PLAYER_TIRON = 1;
-        public Player Login(string username, string password, string email)
+        public Player Login(string username, string email, string password)
         {
             return this.Players.Where(p => p.Name == username && p.Email == email && p.Password == password).FirstOrDefault();
         }
@@ -26,7 +26,7 @@ namespace Trivia_Stage1.Models
         }
         public Player AddSignUp(string email, string name, string password)
         {
-            var p1 = new Player
+            Player p1 = new Player
             {
                 Name = name,
                 Email = email,
@@ -34,13 +34,19 @@ namespace Trivia_Stage1.Models
                 Points = 0,
                 Rank = PLAYER_TIRON,
             };
-            //Entry(p1).State = EntityState.Added; //חדש
-            Players.Add(p1);
-            //Console.WriteLine(Database.CanConnect());
-            SaveChanges();
+            try
+            {
+                this.Players.Add(p1);
+                SaveChanges();
+                return p1;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
-            return p1;
         }
+      
 
     }
 }

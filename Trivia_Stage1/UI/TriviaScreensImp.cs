@@ -15,7 +15,7 @@ namespace Trivia_Stage1.UI
 
         //Place here any state you would like to keep during the app life time
         //For example, player login details...
-        private TriviaContext Db = new TriviaContext();
+        TriviaContext Db = new TriviaContext();
         Player p;
         Question q;
         //Implememnt interface here
@@ -30,19 +30,20 @@ namespace Trivia_Stage1.UI
                 string email = Console.ReadLine();
                 Console.WriteLine("Please enter a password");
                 string password = Console.ReadLine();
-
+                
+                this.p = Db.Login(UserName, email, password);
+                
                 try
                 {
-                    this.p = Db.Login(UserName, password, email);
+                    
                     if (p != null)
                     {
                         return true;
 
                     }
-                    else
-                    {
+                    
                         Console.WriteLine("enter again");
-                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -59,12 +60,15 @@ namespace Trivia_Stage1.UI
             //Logout user if anyone is logged in!
             //A reference to the logged in user should be stored as a member variable
             //in this class! Example:
+            
             //this.currentyPLayer == null
-
+            
+            p = null; //there isnt a player that is connected 
+            
             //Loop through inputs until a user/player is created or 
             //user choose to go back to menu
             char c = ' ';
-            while (c != 'B' && c != 'b' /*&& this.currentyPLayer == null*/)
+            while (c.ToString().ToLower() != "b" && p == null /*&& this.currentyPLayer == null*/)
             {
                 //Clear screen
                 ClearScreenAndSetTitle("Signup");
@@ -78,17 +82,6 @@ namespace Trivia_Stage1.UI
                     Console.ResetColor();
                     email = Console.ReadLine();
                 }
-
-                Console.Write("Please Type your password: ");
-                string password = Console.ReadLine();
-                while (!IsPasswordValid(password))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("password must be at least 4 characters! Please try again: ");
-                    Console.ResetColor();
-                    password = Console.ReadLine();
-                }
-
                 Console.Write("Please Type your Name: ");
                 string name = Console.ReadLine();
                 while (!IsNameValid(name))
@@ -99,6 +92,17 @@ namespace Trivia_Stage1.UI
                     name = Console.ReadLine();
                 }
 
+                Console.Write("Please Type your password: ");
+                string password = Console.ReadLine();
+                while (!IsPasswordValid(password))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("password must be at least 4 characters! Please try again: ");
+                    Console.ResetColor();
+                    password = Console.ReadLine();
+                }
+               
+               
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
                 Console.WriteLine("Connecting to Server...");
                 Console.ResetColor();
@@ -106,26 +110,31 @@ namespace Trivia_Stage1.UI
                 // *For example:
                 try
                 {
-                    TriviaContext db = new TriviaContext();
-                    this.p = db.AddSignUp(email, name, password);
+                      this.p =Db.AddSignUp(email, name, password);
                 }
                 catch (Exception ex)
                 {
-                    //Console.WriteLine(ex);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Failed to signup! Email may already exist in DB!");
                     Console.ResetColor();
                 }
 
 
+                if (p == null)
+                {
+                    Console.WriteLine("Press (b)ack to go back or any other key to signup again...");
+                    c = Console.ReadKey().KeyChar;
+                    if (c.ToString().ToLower() == "b")
+                    {
+                        return false;
+                    }
 
-                //Provide a proper message for example:
-                Console.WriteLine("Press (B)ack to go back or any other key to signup again...");
-                //Get another input from user
-                c = Console.ReadKey(true).KeyChar;
+                }
             }
+
             //return true if signup suceeded!
-            return (false);
+            Console.WriteLine("signup went well");
+            return true;
         }
 
         public void ShowAddQuestion()//שי
