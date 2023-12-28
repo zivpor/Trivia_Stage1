@@ -20,7 +20,7 @@ public partial class TriviaContext : DbContext
     public virtual DbSet<Question> Questions { get; set; }
 
     public virtual DbSet<Ranking> Rankings { get; set; }
-
+    //
     public virtual DbSet<StatusQuestion> StatusQuestions { get; set; }
 
     public virtual DbSet<SubjectQuestion> SubjectQuestions { get; set; }
