@@ -77,6 +77,7 @@ namespace Trivia_Stage1.Models
             int place = random.Next(0, q.Count);
             return q[place];
         }
+        //
 
         public Question Approved(Question question)
         {
