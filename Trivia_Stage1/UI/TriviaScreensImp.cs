@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Trivia_Stage1.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Trivia_Stage1.UI
 {
@@ -139,13 +141,18 @@ namespace Trivia_Stage1.UI
 
         public void ShowAddQuestion()//שי
         {
-            foreach (Player p in Db.Players)
-            {
-                if (p.Points >= 100)
+            
+                if (p != null) //לבדו' אם השחקן מחובר כרגע
                 {
-                    Console.WriteLine("good job! now you have 100 points and you can add questions");
+                if (p.Points >= 100)
+                { Console.WriteLine("good job! now you have 100 points and you can add questions");
                     Console.WriteLine("please enter the subject");
                     string subject = Console.ReadLine();
+
+                    Console.WriteLine("Choose a subject: 1 - History, 2 - Sport, 3 - TV, 4 - Movies, 5 - Fashion");
+                    int subjectID = int.Parse(Console.ReadLine());  //קליטת נושא מחדש
+
+
                     Console.WriteLine("please enter your question");
                     string question = Console.ReadLine();
                     Console.WriteLine("please enter right answer");
@@ -156,9 +163,15 @@ namespace Trivia_Stage1.UI
                     string Wanswer2 = Console.ReadLine();
                     Console.WriteLine("please enter another wrong answer");
                     string Wanswer3 = Console.ReadLine();
+
+                    Db.AddQuestion(p.Email, subjectID, subject, question, Ranswer, Wanswer, Wanswer2, Wanswer3);
                 }
-                else { Console.WriteLine("if you want to add questions, go play and get more points!! X)"); }
-            }
+                else
+                {
+                    Console.WriteLine("if you want to add questions, go play and get more points!! X)");
+                }
+                }
+            
         }
 
         public void ShowPendingQuestions()//נועה
@@ -168,8 +181,9 @@ namespace Trivia_Stage1.UI
             c = '5';
             foreach (Question q in Db.Questions)
             {
-                if (q.StatusId == 1)
+                if (q.StatusId == 2)
                 {
+                    Console.WriteLine(q.Text );
                     Console.WriteLine(q.Ranswer);
                     Console.WriteLine(q.Wanswer1);
                     Console.WriteLine(q.Wanswer2);
@@ -180,7 +194,7 @@ namespace Trivia_Stage1.UI
                         c = Console.ReadKey().KeyChar;
                         if (c == 1)
                         {
-                            q.StatusId = 2;
+                            q.StatusId = 1;
                         }
                         if (c == 2)
                         {
@@ -189,39 +203,59 @@ namespace Trivia_Stage1.UI
                         else
                             c = '5';
                     }
+                    Db.ApproveQuestion(q);
+                    c = '5';
                 }
             }
         }
+       
+        
+      
+
         public void ShowGame()//זיו
         {
+            q = Db.RandomQusetion();
+            List<string> answers = new List<string>() { q.Ranswer, q. Wanswer1, q.Wanswer2, q.Wanswer3 }; 
+            answers = answers.OrderBy(x => Random.Shared.Next()).ToList(); 
+            Console.WriteLine(q.Text); //הדפסת השאלה
             bool exist = false;
             string answer = "";
             char e = ' ';
-            foreach (Question q in Db.Questions)
+            foreach (Question question in Db.Questions)
             {
-                while (!exist)
+                if (Db.Approved(q) != null)
                 {
-                    Console.WriteLine("trivia questions:");
-                    //print question and answers
-                    Db.QuestoinsAndAnswers(q);
-                    Console.WriteLine("what is your final answer?");
-                    answer = Console.ReadLine();
-                    if (answer == q.Ranswer)
+                    while (!exist)
                     {
-                        this.p.Points += 10;
-                        Console.WriteLine("you nailed it!!");
+                        Console.WriteLine("trivia questions:");
+                        //print question and answers
+                        Console.WriteLine(question.Text);
+                        Console.WriteLine(question.Wanswer1);
+                        Console.WriteLine(question.Wanswer2);
+                        Console.WriteLine(question.Wanswer3);
+                        Console.WriteLine(question.Ranswer);
+
+                        Console.WriteLine("what is your final answer?");
+                        answer = Console.ReadLine();
+                        if (answer == q.Ranswer)
+                        {
+                            this.p.Points += 10;
+                            Console.WriteLine("you nailed it!!");
+                        }
+                        else
+                        {
+                            this.p.Points -= 5;
+                            Console.WriteLine("maybe next time:(");
+                        }
                     }
-                    else
+                    Console.WriteLine("press e if you want to exit");
+                    e = Console.ReadKey().KeyChar;
+                    if (e == 'e')
                     {
-                        Console.WriteLine("maybe next time:(");
+                        exist = true;
                     }
                 }
-                Console.WriteLine("press e if you want to exit");
-                e = Console.ReadKey().KeyChar;
-                if (e == 'e')
-                {
-                    exist = true;
-                }
+                Db.SaveChanges();
             }
         }
         public void ShowProfile()//שי
@@ -312,9 +346,12 @@ namespace Trivia_Stage1.UI
                     Console.WriteLine("Press B to go back to the menu");
                     Console.WriteLine("enter any other key to continue updating");
                     c = Console.ReadKey(true).KeyChar;
-                }
 
+                    
+                }
+                Db.Profile(p);
             }
+            
         }
 
 

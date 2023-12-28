@@ -24,17 +24,16 @@ public partial class TriviaContext : DbContext
     public virtual DbSet<StatusQuestion> StatusQuestions { get; set; }
 
     public virtual DbSet<SubjectQuestion> SubjectQuestions { get; set; }
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
-        //optionsBuilder.LogTo(Console.WriteLine);
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server = localhost\\NOA-FISHER; Database=TriviaDB;Trusted_Connection=true; TrustServerCertificate=True");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Player>(entity =>
         {
-            entity.HasKey(e => e.Email).HasName("PK__Player__A9D10535902923E8");
+            entity.HasKey(e => e.Email).HasName("PK__Player__A9D105359C69E8FA");
 
             entity.HasOne(d => d.RankNavigation).WithMany(p => p.Players)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -43,7 +42,7 @@ public partial class TriviaContext : DbContext
 
         modelBuilder.Entity<Question>(entity =>
         {
-            entity.HasKey(e => e.QuestionId).HasName("PK__Question__0DC06FAC21B566FC");
+            entity.HasKey(e => e.QuestionId).HasName("PK__Question__0DC06FAC66FA5028");
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Questions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -60,21 +59,21 @@ public partial class TriviaContext : DbContext
 
         modelBuilder.Entity<Ranking>(entity =>
         {
-            entity.HasKey(e => e.RankId).HasName("PK__Ranking__B37AF87619645B85");
+            entity.HasKey(e => e.RankId).HasName("PK__Ranking__B37AF8760E0EE93E");
 
             entity.Property(e => e.RankId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<StatusQuestion>(entity =>
         {
-            entity.HasKey(e => e.StatusId).HasName("PK__StatusQu__C8EE20631FD637C1");
+            entity.HasKey(e => e.StatusId).HasName("PK__StatusQu__C8EE2063589A28D9");
 
             entity.Property(e => e.StatusId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<SubjectQuestion>(entity =>
         {
-            entity.HasKey(e => e.SubjectId).HasName("PK__SubjectQ__AC1BA3A87C61425E");
+            entity.HasKey(e => e.SubjectId).HasName("PK__SubjectQ__AC1BA3A8C8DF637F");
         });
 
         OnModelCreatingPartial(modelBuilder);
